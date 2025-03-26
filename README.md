@@ -1,3 +1,14 @@
+## group name :- "The Debuggers" 
+
+## group members 
+1. prince savaliya, ID :- 202401191
+  lab group 3.
+2. Raj kachhadiya, ID :- 202401255
+lab group 4.
+3. Gaurav Rathod, ID-202401178
+lab group 3.
+4. Tanish solanki, ID :- 202401264
+lab group 4.
 # 🎮 TETRIS - CLASSIC BLOCK FALLING GAME
 
 ## 📌 How to Play the Game
