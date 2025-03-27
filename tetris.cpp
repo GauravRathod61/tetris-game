@@ -9,22 +9,15 @@ using namespace std;
 const int WIDTH = 10;
 const int HEIGHT = 20;
 
-// Tetromino shapes (I, O, T, S, Z, J, L)
+// Tetromino shapes
 const vector<vector<vector<int>>> TETROMINOES = {
-    // I-piece
-    {{1, 1, 1, 1}},
-    // O-piece
-    {{1, 1}, {1, 1}},
-    // T-piece
-    {{0, 1, 0}, {1, 1, 1}},
-    // S-piece
-    {{0, 1, 1}, {1, 1, 0}},
-    // Z-piece
-    {{1, 1, 0}, {0, 1, 1}},
-    // J-piece
-    {{1, 0, 0}, {1, 1, 1}},
-    // L-piece
-    {{0, 0, 1}, {1, 1, 1}}
+    {{1, 1, 1, 1}}, // I
+    {{1, 1}, {1, 1}}, // O
+    {{0, 1, 0}, {1, 1, 1}}, // T
+    {{0, 1, 1}, {1, 1, 0}}, // S
+    {{1, 1, 0}, {0, 1, 1}}, // Z
+    {{1, 0, 0}, {1, 1, 1}}, // J
+    {{0, 0, 1}, {1, 1, 1}}  // L
 };
 
 class Tetromino {
@@ -32,7 +25,11 @@ public:
     vector<vector<int>> shape;
     int x, y;
 
-    Tetromino(vector<vector<int>> s) : shape(s), x(WIDTH / 2 - s[0].size() / 2), y(0) {}
+    Tetromino(vector<vector<int>> s) {
+        shape = s;
+        x = WIDTH / 2 - s[0].size() / 2;
+        y = 0;
+    }
 
     void rotate() {
         int rows = shape.size(), cols = shape[0].size();
@@ -60,7 +57,8 @@ private:
                     int newX = piece.x + j;
                     int newY = piece.y + i;
                     if (newX < 0 || newX >= WIDTH || newY >= HEIGHT || (newY >= 0 && grid[newY][newX])) {
-                        return true;                    }
+                        return true;
+                    }
                 }
             }
         }
@@ -95,7 +93,6 @@ private:
     }
 
 public:
-
     Game() : grid(HEIGHT, vector<int>(WIDTH, 0)), score(0), gameOver(false) {
         srand(static_cast<unsigned>(time(0)));
         currentPiece = new Tetromino(TETROMINOES[rand() % TETROMINOES.size()]);
@@ -110,12 +107,15 @@ public:
             char key = _getch();
             Tetromino temp = *currentPiece;
             switch (key) {
-                case 'a': temp.x--; break; // Move left
-                case 'd': temp.x++; break; // Move right
-                case 's': temp.y++; break; // Move down
-                case 'w': temp.rotate(); break; // Rotate
-                case ' ': while (!checkCollision(temp)) temp.y++; temp.y--; break; // Hard drop
-                case 27: gameOver = true; break; // ESC to quit
+                case 'a': temp.x--; break;
+                case 'd': temp.x++; break;
+                case 's': temp.y++; break;
+                case 'w': temp.rotate(); break;
+                case ' ':
+                    while (!checkCollision(temp)) temp.y++;
+                    temp.y--;
+                    break;
+                case 27: gameOver = true; break;
             }
             if (!checkCollision(temp)) *currentPiece = temp;
         }
@@ -136,7 +136,7 @@ public:
     }
 
     void render() {
-        system("cls"); // Clear the console
+        system("cls");
         vector<vector<int>> display = grid;
 
         for (int i = 0; i < currentPiece->shape.size(); ++i) {
@@ -164,12 +164,18 @@ public:
 };
 
 int main() {
-    Game game;
-    while (!game.isGameOver()) {
-        game.handleInput();
-        game.update();
-        game.render();
-        Sleep(200); // Adjust game speed
+    while (true) {
+        Game game;
+        while (!game.isGameOver()) {
+            game.handleInput();
+            game.update();
+            game.render();
+            Sleep(200);
+        }
+        cout << "Press 'i' to play again or any key to exit: ";
+        char choice;
+        cin >> choice;
+        if (choice != 'i') break;
     }
     return 0;
 }
