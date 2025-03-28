@@ -73,3 +73,6 @@ The main loop continues until `gameOver` is `true`:
 
 
 Enjoy playing **Tetris Clone**! 🚀
+Photo
+![Screenshot 2025-03-28 133306](https://github.com/user-attachments/assets/cb1697f2-38fd-4a29-91e8-818285446891)
+
