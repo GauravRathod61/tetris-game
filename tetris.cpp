@@ -21,6 +21,7 @@ struct Tetromino {
 
     void rotate() {
         rotationState = (rotationState + 1) % rotations.size(); 
+        // rotationState = (rotationState - 1 + rotations.size()) % rotations.size();
     }
 
     vector<vector<int>> getShape() {
